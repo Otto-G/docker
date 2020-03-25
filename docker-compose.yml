@@ -4,29 +4,14 @@ version: '3'
 # Defining all of the different Applications that will run
 # --------------------------------------------------------
 services:
-  homeassistant:
-    container_name: home-assistant
-    image: homeassistant/home-assistant:stable
-    volumes:
-      - /Pool1-Working/Applications/HomeAutomation:/config
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
-    environment:
-      - TZ=America/New_York
-    restart: always
-    network_mode: host
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.home-assistant.rule=Host('localhost:8123')"
-      - "traefik.http.routers.home-assistant.entrypoints=8123"
-      - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
-
+  # ----------------------------
   # Setting up the reverse proxy
+  # ----------------------------
   reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:v2.1
+    container_name: traefik  # The name to call the created image
+    image: traefik:v2.1  # The official v2 Traefik docker image source
     # Enables the web UI and tells Traefik to listen to docker
-    command: 
+    command:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=true"
@@ -51,3 +36,25 @@ services:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./letsencrypt:/letsencrypt"
+
+  # ------------------------------------
+  # Setting up the Home-Assistant server
+  # ------------------------------------
+  homeassistant:
+    container_name: home-assistant  # The name to call the image
+    image: homeassistant/home-assistant:stable  # The source of the container
+    volumes:
+      - /Pool1-Working/Applications/HomeAutomation:/config
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    environment:
+      - TZ=America/New_York
+    restart: always
+    network_mode: host
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.home-assistant.rule=Host('localhost:8123')"
+      - "traefik.http.routers.home-assistant.entrypoints=8123"
+      - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
+
+

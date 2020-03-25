@@ -19,3 +19,9 @@
 Since all external tools will be routed through duckDNS, 
 Traefik will handle the reverse proxying to allow easy access to 
 all of the different web services.
+
+As Syncthing is only being run as an internal service, I will keep
+it as a single docker command.  All of the other services will be 
+built as a docker-compose.yml file.  This is because they are all
+interdependant for the user facing functions.  It also provides a 
+slight degree of seperation from Syncthing and the others.  

@@ -1,4 +1,8 @@
 version: '3'
+
+# --------------------------------------------------------
+# Defining all of the different Applications that will run
+# --------------------------------------------------------
 services:
   homeassistant:
     container_name: home-assistant
@@ -16,9 +20,8 @@ services:
       - "traefik.http.routers.home-assistant.rule=Host('localhost:8123')"
       - "traefik.http.routers.home-assistant.entrypoints=8123"
       - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
-version: '3'
 
-services:
+  # Setting up the reverse proxy
   reverse-proxy:
     # The official v2 Traefik docker image
     image: traefik:v2.1

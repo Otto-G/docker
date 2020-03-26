@@ -6,6 +6,7 @@
 4. GitLab
 5. HomeAssistant
 6. Traefik
+7. Calibre
 
 ## Structure 
 
@@ -15,6 +16,7 @@
 |                     | Transmission         |
 |                     | GitLab               |
 |                     | HomeAssistant        |
+|                     | Calibre              |
 
 Since all external tools will be routed through duckDNS, 
 Traefik will handle the reverse proxying to allow easy access to 

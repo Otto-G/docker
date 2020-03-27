@@ -1,5 +1,20 @@
 version: '3'
 
+# Build directory structure:
+#
+# ~/docker
+#   docker-compose.yml
+#   README.md
+#
+#   home-assistant/
+#
+#   plex/
+#
+#   traefik/
+#     duckDNSToken
+#     acme/
+#       acme.json  # cert location that needs to be touched an 600 permissions set
+
 # --------------------------------------------------------
 # Defining all of the different Applications that will run
 # --------------------------------------------------------
@@ -31,7 +46,7 @@ services:
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     environment:
-      - "DUCKDNS_TOKEN_FILE=~/docker/traefik/duckDNSToken"
+      - "DUCKDNS_TOKEN_FILE=./traefik/duckDNSToken"  # ./ Refers to the current working directory
     volumes:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

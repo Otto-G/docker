@@ -63,17 +63,17 @@ services:
   GitLab:
     container_name: gitlab  # The name to call the image
     image: 'gitlab/gitlab-ce:latest'  # The source of the container
-      restart: always  # Sets the container to restart whenever it stops/crashes
-      hostname: 'gitlab.example.com'
-      environment:
-        GITLAB_OMNIBUS_CONFIG: |
-          external_url 'https://gitlab.example.com'
-          # Add any other gitlab.rb configuration here, each on its own line
-      ports:
-        - '80:80'
-        - '443:443'
-        - '22:22'
-      volumes:
-        - 'gitlab/config:/etc/gitlab'
-        - 'gitlab/logs:/var/log/gitlab'
-        - 'gitlab/data:/var/opt/gitlab'
+    restart: always  # Sets the container to restart whenever it stops/crashes
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.com'
+        # Add any other gitlab.rb configuration here, each on its own line
+    ports:
+      - '80:80'
+      - '443:443'
+      - '22:22'
+    volumes:
+      - 'gitlab/config:/etc/gitlab'
+      - 'gitlab/logs:/var/log/gitlab'
+      - 'gitlab/data:/var/opt/gitlab'

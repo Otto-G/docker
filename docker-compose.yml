@@ -22,7 +22,7 @@ services:
   # ----------------------------
   # Setting up the reverse proxy
   # ----------------------------
-  reverse-proxy:
+  traefik:
     container_name: traefik  # The name to call the created image
     image: traefik:v2.1  # The official v2 Traefik docker image source
     # Enables the web UI and tells Traefik to listen to docker
@@ -36,7 +36,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns"
       - "--certificatesresolvers.myresolver.acme.email=z28blackpearl@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=acme.json"
-      #- "--providers.file.filename=~/docker/traefik/traefik.yml"
+      #- "--providers.file.filename=./traefik/traefik-config.yml"
       #- "--providers.file.watch=true"
     ports:
       # The HTTP port

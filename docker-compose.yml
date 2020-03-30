@@ -69,7 +69,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.home-assistant.rule=Path('/hass')"
-      - "traefik.http.routers.home-assistant.entrypoints=8123"
+      - "traefik.http.routers.home-assistant.entrypoints=80"
       - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
 
   # ------------------------

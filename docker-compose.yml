@@ -89,9 +89,9 @@ services:
       - '443:443'
       - '22:22'
     volumes:
-      - 'gitlab/config:/etc/gitlab'
-      - 'gitlab/logs:/var/log/gitlab'
-      - 'gitlab/data:/var/opt/gitlab'
+      - '/Pool1-Working/Applications/GitLab/config:/etc/gitlab'
+      - '/Pool1-Working/Applications/GitLab/logs:/var/log/gitlab'
+      - '/Pool1-Working/Applications/GitLab/data:/var/opt/gitlab'
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.home-assistant.rule=Path('/hass')"

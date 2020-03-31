@@ -74,9 +74,15 @@ services:
       - "${MYDIR}/traefik:/traefik"
     ports:
       # The HTTP port
-      - "80:80"
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
       # The HTTPS port
-      - "443:443"
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     labels:

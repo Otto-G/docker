@@ -30,6 +30,8 @@ It is possible to reduce the load on DuckDNS by using the below script to only s
       curl "https://www.duckdns.org/update?domains=$MYADDR&token=$MYTOKEN&ip" &&  # Send the update to duckdns  
       echo $IP_ADDRESS > ipaddr.txt  # Store the new ipaddress in the file  
 
+- _Make sure to replace $MYADDR, and $MYTOKEN with the address prefix and token from duckDNS or set them as variables_
+
 # Docker Images
 
 1. [Syncthing](https://syncthing.net/)

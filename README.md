@@ -25,10 +25,10 @@
 It is possible to reduce the load on DuckDNS by using the below script to only send an update when your ip address
  actually changes.  
 
-`IP_ADDRESS=$(curl "http://checkip.amazonaws.com" | head -1) &&  # No space is a requirement to set the variable
-  [ $IP_ADDRESS = "$(cat "ipaddr.txt")" ] ||  # Compare the returned ip address with the old ipaddress only proceed if no match
-  curl "https://www.duckdns.org/update?domains=$MYADDR&token=$MYTOKEN&ip" &&  # Send the update to duckdns
-  echo $IP_ADDRESS > ipaddr.txt  # Store the new ipaddress in the file`
+    IP_ADDRESS=$(curl "http://checkip.amazonaws.com" | head -1) &&  # No space is a requirement to set the variable
+      [ $IP_ADDRESS = "$(cat "ipaddr.txt")" ] ||  # Compare the returned ip address with the old ipaddress only proceed if no match  
+      curl "https://www.duckdns.org/update?domains=$MYADDR&token=$MYTOKEN&ip" &&  # Send the update to duckdns  
+      echo $IP_ADDRESS > ipaddr.txt  # Store the new ipaddress in the file  
 
 # Docker Images
 

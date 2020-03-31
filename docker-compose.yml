@@ -115,10 +115,10 @@ services:
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
       - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")"
-      - "traefik.http.routers.homeassistant.service=homeassistant-docker@docker"
+      # - "traefik.http.routers.homeassistant.service=homeassistant@docker"
       # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+      # - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
 
   # ------------------------
@@ -151,7 +151,7 @@ services:
       - "traefik.http.routers.gitlab.tls=true"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
       - "traefik.http.routers.gitlab.rule=Host(\"gitlab.${WEBSITE}\")"
-      - "traefik.http.routers.gitlab.service=GitLab-docker@docker"
+      # - "traefik.http.routers.gitlab.service=gitlab@docker"
       # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"
+      # - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"

@@ -87,6 +87,10 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.middlewares.admin.basicauth.usersfile=/traefik/.htpasswd"
+        # global redirect to https
+      - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.redirs.entrypoints=web"
+      - "traefik.http.routers.redirs.middlewares=redirect-to-https"
 
   # ------------------------------------
   # Setting up the Home-Assistant server
@@ -109,7 +113,7 @@ services:
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
       - "traefik.http.routers.homeassistant.rule=Host('hass.${WEBSITE}')"
       # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
-      - "traefik.http.routers.homeassistant.entrypoints=web"
+      - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
 
@@ -143,5 +147,5 @@ services:
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
       - "traefik.http.routers.gitlab.rule=Host('gitlab.${WEBSITE}')"
       # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
-      - "traefik.http.routers.gitlab.entrypoints=web"
+      - "traefik.http.routers.gitlab.entrypoints=websecure"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"

@@ -87,7 +87,7 @@ services:
       - TZ=America/New_York
     volumes:
       - /Pool1-Working/Applications/HomeAutomation:/config
-    network_mode: host
+    network_mode: bridge
     ports:
       - '8123:8123'
     labels:

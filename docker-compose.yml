@@ -19,6 +19,9 @@ version: '3'
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=unassigned
 #
 # Ports used by containers:
+#   Syncthing:
+#     System    Internal  Service
+#     8384 -->  8384      Syncthing
 #   Traefik:
 #     System    Internal  Service
 #     80 -->    80        HTTP

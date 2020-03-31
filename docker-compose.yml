@@ -53,7 +53,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns"
       - "--certificatesresolvers.myresolver.acme.email=z28blackpearl@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=acme/acme.json"
+      - "--certificatesresolvers.myresolver.acme.storage=./acme/acme.json"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
     ports:
@@ -86,9 +86,9 @@ services:
     network_mode: host
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.home-assistant.rule=Path('/hass')"
-      - "traefik.http.routers.home-assistant.entrypoints=80"
-      - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
+      - "traefik.http.routers.homeassistant.rule=Path('/hass')"
+      - "traefik.http.routers.homeassistant.entrypoints=80"
+      - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
 
   # ------------------------
   # Setting up GitLab Server
@@ -112,6 +112,6 @@ services:
       - '/Pool1-Working/Applications/GitLab/data:/var/opt/gitlab'
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.home-assistant.rule=Path('/hass')"
-      - "traefik.http.routers.home-assistant.entrypoints=8123"
-      - "traefik.http.routers.home-assistant.tls.certresolver=myresolver"
+      - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
+      - "traefik.http.routers.gitlab.entrypoints=80"
+      - "traefik.http.routers.gitlab.tls.certresolver=myresolver"

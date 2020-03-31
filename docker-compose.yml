@@ -50,6 +50,7 @@ services:
     # Enables the web UI and tells Traefik to listen to docker
     command:
       - "--api=true"
+      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=true"
       - "--entrypoints.web.address=:80"
@@ -72,7 +73,7 @@ services:
       # The HTTPS port
       - "443:443"
       # The Web UI (enabled by --api.insecure=true)
-      # - "8080:8080"
+      - "8080:8080"
     labels:
       # Dashboard
       - "traefik.http.routers.traefik.rule=Host(`${WEBSITE}`)"

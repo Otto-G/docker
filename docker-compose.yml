@@ -46,6 +46,7 @@ services:
   traefik:
     container_name: traefik  # The name to call the created image
     image: traefik:v2.1  # The official v2 Traefik docker image source
+    restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:
       - "--api.insecure=true"
@@ -59,6 +60,12 @@ services:
       - "--certificatesresolvers.myresolver.acme.storage=./traefik/acme/acme.json"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
+    environment:
+      - "DUCKDNS_TOKEN_FILE=./traefik/duckDNSToken"  # ./ Refers to the current working directory
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
     ports:
       # The HTTP port
       - "80:80"
@@ -66,12 +73,6 @@ services:
       - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
-    environment:
-      - "DUCKDNS_TOKEN_FILE=./traefik/duckDNSToken"  # ./ Refers to the current working directory
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./letsencrypt:/letsencrypt"
 
   # ------------------------------------
   # Setting up the Home-Assistant server
@@ -80,13 +81,15 @@ services:
     container_name: homeassistant  # The name to call the image
     image: homeassistant/home-assistant:stable  # The source of the container
     restart: always  # Sets the container to restart whenever it stops/crashes
-    volumes:
-      - /Pool1-Working/Applications/HomeAutomation:/config
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
     environment:
       - TZ=America/New_York
+    volumes:
+      - /Pool1-Working/Applications/HomeAutomation:/config
     network_mode: host
+    ports:
+      - '8123:8123'
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.rule=Path('/hass')"
@@ -110,14 +113,14 @@ services:
         # nginx['listen_port'] = 80
         # nginx['listen_https'] = false
         # Add any other gitlab.rb configuration here, each on its own line
-    ports:
-      - '48620:80'  # Unassigned port to internal port
-      - '48621:443'  # Unassigned port to internal port
-      - '48622:22'  # Unassigned port to internal port
     volumes:
       - '/Pool1-Working/Applications/GitLab/config:/etc/gitlab'
       - '/Pool1-Working/Applications/GitLab/logs:/var/log/gitlab'
       - '/Pool1-Working/Applications/GitLab/data:/var/opt/gitlab'
+    ports:
+      - '48620:80'  # Unassigned port to internal port
+      - '48621:443'  # Unassigned port to internal port
+      - '48622:22'  # Unassigned port to internal port
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.rule=Path('/gitlab')"

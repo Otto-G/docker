@@ -92,6 +92,7 @@ services:
       - '8123:8123'
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.rule=Host('${WEBSITE}')"
       - "traefik.http.routers.homeassistant.rule=Path('/hass')"
       - "traefik.http.routers.homeassistant.entrypoints=web"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
@@ -123,6 +124,7 @@ services:
       - '48622:22'  # Unassigned port to internal port
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.rule=Host('${WEBSITE}')"
       - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=web"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"

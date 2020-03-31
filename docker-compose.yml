@@ -35,6 +35,11 @@ version: '3'
 #     48620 --> 80        HTTP
 #     48621 --> 443       HTTPS
 #     48622 --> 22        SSH
+#
+# Environment Variables (stored in .env)
+#   - HOME = /path/to/working/directory
+#   - WEBSITE = mysite.example.com
+#   - EMAIL = me@example.com
 
 # --------------------------------------------------------
 # Defining all of the different Applications that will run
@@ -57,11 +62,11 @@ services:
       - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns"
       - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
-      - "--certificatesresolvers.myresolver.acme.storage=./traefik/acme/acme.json"
+      - "--certificatesresolvers.myresolver.acme.storage=${HOME}/traefik/acme/acme.json"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
     environment:
-      - "DUCKDNS_TOKEN_FILE=./traefik/duckDNSToken"  # ./ Refers to the current working directory
+      - "DUCKDNS_TOKEN_FILE=${HOME}/traefik/duckDNSToken"  # ./ Refers to the current working directory
     volumes:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -80,7 +85,7 @@ services:
       - "traefik.http.routers.traefik.middlewares=admin"
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"
       - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.middlewares.admin.basicauth.usersfile=./traefik/.htpasswd"
+      - "traefik.http.middlewares.admin.basicauth.usersfile=${HOME}/traefik/.htpasswd"
 
   # ------------------------------------
   # Setting up the Home-Assistant server

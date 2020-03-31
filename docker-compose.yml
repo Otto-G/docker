@@ -14,6 +14,24 @@ version: '3'
 #     duckDNSToken
 #     acme/
 #       acme.json  # cert location that needs to be touched an 600 permissions set
+#
+# Ports 48130-48555, 48620-48652 are all unassigned according to iana.org...
+# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=unassigned
+#
+# Ports used by containers:
+#   Traefik:
+#     System    Internal  Service
+#     80 -->    80        HTTP
+#     443 -->   443       HTTPS
+#     8080 -->  8080      Traefik frontend
+#   HomeAssistant:
+#     System    Internal  Service
+#     8213 -->  8123      HomeAssistant frontend
+#   GitLab:
+#     System    Internal  Service
+#     48620 --> 80        HTTP
+#     48621 --> 443       HTTPS
+#     48622 --> 22        SSH
 
 # --------------------------------------------------------
 # Defining all of the different Applications that will run
@@ -85,9 +103,9 @@ services:
         external_url 'https://gitlab.example.com'
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
-      - '80:80'
-      - '443:443'
-      - '22:22'
+      - '48620:80'  # Unassigned port to internal port
+      - '48621:443'  # Unassigned port to internal port
+      - '48622:22'  # Unassigned port to internal port
     volumes:
       - '/Pool1-Working/Applications/GitLab/config:/etc/gitlab'
       - '/Pool1-Working/Applications/GitLab/logs:/var/log/gitlab'

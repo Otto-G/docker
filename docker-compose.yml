@@ -100,10 +100,10 @@ services:
     container_name: gitlab  # The name to call the image
     image: 'gitlab/gitlab-ce:latest'  # The source of the container
     restart: always  # Sets the container to restart whenever it stops/crashes
-    hostname: 'gitlab.example.com'
+    # hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com'
+        # external_url 'https://gitlab.example.com'
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
       - '48620:80'  # Unassigned port to internal port

@@ -93,8 +93,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
-      - "traefik.http.routers.homeassistant.rule=Host('${WEBSITE}')"
-      - "traefik.http.routers.homeassistant.rule=Path('/hass')"
+      - "traefik.http.routers.homeassistant.rule=Host('${WEBSITE}') && Path('/hass')"
+      # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
       - "traefik.http.routers.homeassistant.entrypoints=web"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
@@ -127,7 +127,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
-      - "traefik.http.routers.gitlab.rule=Host('${WEBSITE}')"
-      - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
+      - "traefik.http.routers.gitlab.rule=Host('${WEBSITE}') && Path('/gitlab')"
+      # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=web"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"

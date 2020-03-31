@@ -103,7 +103,12 @@ services:
     # hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        # external_url 'https://gitlab.example.com'
+        # external_url 'http://192.168.1.55:48620'
+        # gitlab_rails['gitlab_shell_ssh_port'] = 48622
+        # nginx['enable'] = true
+        # nginx['redirect_http_to_https'] = false
+        # nginx['listen_port'] = 80
+        # nginx['listen_https'] = false
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
       - '48620:80'  # Unassigned port to internal port

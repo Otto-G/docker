@@ -67,7 +67,7 @@ services:
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
     environment:
-      - "DUCKDNS_TOKEN_FILE=${MYDIR}/traefik/duckDNSToken"  # ./ Refers to the current working directory
+      - "DUCKDNS_TOKEN_FILE=${MYDIR}/traefik/duckDNSToken"
     volumes:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -81,7 +81,7 @@ services:
       - "8080:8080"
     labels:
       # Dashboard
-      - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)"
+      - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)"  # These ` are backticks, NOT single quotes '
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=admin"
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"

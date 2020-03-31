@@ -49,7 +49,7 @@ services:
     restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:
-      - "--api.insecure=true"
+      - "--api=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=true"
       - "--entrypoints.web.address=:80"
@@ -72,7 +72,15 @@ services:
       # The HTTPS port
       - "443:443"
       # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
+      # - "8080:8080"
+    labels:
+      # Dashboard
+      - "traefik.http.routers.traefik.rule=Host(`${WEBSITE}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=admin"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.middlewares.admin.basicauth.usersfile=./traefik/.htpasswd"
 
   # ------------------------------------
   # Setting up the Home-Assistant server

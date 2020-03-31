@@ -2,7 +2,7 @@
 
 **Operating System:** Debian 10 "Buster"
 
-#### Major Programs:
+**Major Programs:**
 
 * [Cockpit](https://github.com/cockpit-project/cockpit)
     * Web based server admin page
@@ -14,13 +14,13 @@
     * Container system to hold different systems.  Part of the main way that the system is organized.  
     
 
-#### Installed programs:
+**Installed programs:**
 
     sudo aptitude install docker lm-sensors hddtemp unp curl
     sudo aptitude install -t buster-backports cockpit dkms spl-dkms zfs-dkms zfsutils-linux
     
     
-# DuckDNS
+## DuckDNS
 
 It is possible to reduce the load on DuckDNS by using the below script to only send an update when your ip address
  actually changes.  
@@ -32,7 +32,7 @@ It is possible to reduce the load on DuckDNS by using the below script to only s
 
 - _Make sure to replace $MYADDR, and $MYTOKEN with the address prefix and token from duckDNS or set them as variables_
 
-# Docker Images
+## Docker Images
 
 1. [Syncthing](https://syncthing.net/)
     * File syncing between devices
@@ -45,7 +45,7 @@ It is possible to reduce the load on DuckDNS by using the below script to only s
 6. Traefik
 7. Calibre
 
-## Structure 
+### Structure 
 
 | Internal Only Tools | External Tools       | 
 | :---                | :---                 |

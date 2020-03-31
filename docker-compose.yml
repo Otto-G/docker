@@ -72,7 +72,7 @@ services:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "${MYDIR}/traefik:/traefik"
-    ports:
+    ports:  # This long port section requires docker-compose version 3.2+
       # The HTTP port
       - target: 80
         published: 80

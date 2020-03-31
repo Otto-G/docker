@@ -81,7 +81,7 @@ services:
       - "8080:8080"
     labels:
       # Dashboard
-      - "traefik.http.routers.traefik.rule=Host(`${WEBSITE}`)"
+      - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=admin"
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"
@@ -107,7 +107,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
-      - "traefik.http.routers.homeassistant.rule=Host('${WEBSITE}') && Path('/hass')"
+      - "traefik.http.routers.homeassistant.rule=Host('hass.${WEBSITE}')"
       # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
       - "traefik.http.routers.homeassistant.entrypoints=web"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
@@ -141,7 +141,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
-      - "traefik.http.routers.gitlab.rule=Host('${WEBSITE}') && Path('/gitlab')"
+      - "traefik.http.routers.gitlab.rule=Host('gitlab.${WEBSITE}')"
       # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=web"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"

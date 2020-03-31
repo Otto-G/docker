@@ -77,7 +77,7 @@ services:
   # Setting up the Home-Assistant server
   # ------------------------------------
   homeassistant:
-    container_name: home-assistant  # The name to call the image
+    container_name: homeassistant  # The name to call the image
     image: homeassistant/home-assistant:stable  # The source of the container
     restart: always  # Sets the container to restart whenever it stops/crashes
     volumes:
@@ -116,5 +116,5 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
-      - "traefik.http.routers.gitlab.entrypoints=80"
+      - "traefik.http.routers.gitlab.entrypoints=48620"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"

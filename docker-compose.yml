@@ -56,7 +56,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns"
-      - "--certificatesresolvers.myresolver.acme.email=z28blackpearl@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=./traefik/acme/acme.json"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"

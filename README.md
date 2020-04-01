@@ -57,7 +57,10 @@ It is possible to reduce the load on DuckDNS by using the below script to only s
 
 Since all external tools will be routed through duckDNS, 
 Traefik will handle the reverse proxying to allow easy access to 
-all of the different web services.
+all of the different web services.  One thing to keep in mind is that 
+all of the tools that are going to be running together under Traefik 
+need to be in bridge mode so that they work properly.  There might be 
+a way around that issue, but I couldn't find it.  
 
 As Syncthing is only being run as an internal service, I will keep
 it as a single docker command.  All of the other services will be 

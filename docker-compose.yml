@@ -74,7 +74,7 @@ services:
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
     environment:
-      - "DUCKDNS_TOKEN_FILE=${MYDIR}/traefik/duckDNSToken"
+      - "DUCKDNS_TOKEN_FILE=/traefik/duckDNSToken"
     volumes:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

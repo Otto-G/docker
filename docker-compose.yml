@@ -69,7 +69,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/traefik/acme/acme.json"
       - "--log=true"
-      - "--log.level=INFO"  # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+      - "--log.level=DEBUG"  # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
       - "--log.filePath=/traefik/traefik.log"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"

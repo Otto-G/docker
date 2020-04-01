@@ -139,7 +139,6 @@ services:
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
-
   # ------------------------
   # Setting up GitLab Server
   # ------------------------

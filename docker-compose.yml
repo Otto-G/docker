@@ -81,6 +81,7 @@ services:
       - "${MYDIR}/traefik:/traefik"
     networks:
       - default
+    network_mode: bridge
     ports:  # This long port section requires docker-compose version 3.2+
       # The SSH Port
       - target: 2222

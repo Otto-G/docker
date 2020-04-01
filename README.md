@@ -16,7 +16,7 @@
 
 **Installed programs:**
 
-    sudo aptitude install docker lm-sensors hddtemp unp curl apache2-utils samba
+    sudo aptitude install docker lm-sensors hddtemp unp curl apache2-utils samba cockpit-docker
     sudo aptitude install -t buster-backports cockpit dkms spl-dkms zfs-dkms zfsutils-linux
     
     

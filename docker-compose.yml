@@ -77,8 +77,8 @@ services:
       - "${MYDIR}/traefik:/traefik"
     ports:  # This long port section requires docker-compose version 3.2+
       # The SSH Port
-      - target: 22
-        published: 22
+      - target: 2222
+        published: 2222
         protocol: tcp
         mode: host
       # The HTTP port

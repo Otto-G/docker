@@ -174,7 +174,7 @@ services:
       # - "traefik.http.routers.gitlab.service=gitlab@docker"
       # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=48620"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=48621"
       - "traefik.tcp.routers.gitlab-ssh.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.gitlab-ssh.entrypoints=ssh"
       - "traefik.tcp.routers.gitlab-ssh.service=gitlab-ssh-svc"

@@ -73,6 +73,11 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "${MYDIR}/traefik:/traefik"
     ports:  # This long port section requires docker-compose version 3.2+
+      # The SSH Port
+      - target: 22
+        published: 22
+        protocol: tcp
+        mode: host
       # The HTTP port
       - target: 80
         published: 80
@@ -124,7 +129,7 @@ services:
       # - "traefik.http.routers.homeassistant.service=homeassistant@docker"
       # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
-      # - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
 
   # ------------------------
@@ -160,4 +165,8 @@ services:
       # - "traefik.http.routers.gitlab.service=gitlab@docker"
       # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      # - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=48620"
+      - "traefik.tcp.routers.gitlab-ssh.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.gitlab-ssh.entrypoints=ssh"
+      - "traefik.tcp.routers.gitlab-ssh.service=gitlab-ssh-svc"
+      - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=48662"

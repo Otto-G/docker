@@ -165,6 +165,7 @@ services:
       - '48620:80'  # Unassigned port to internal port
       - '48621:443'  # Unassigned port to internal port
       - '48622:22'  # Unassigned port to internal port
+    network_mode: bridge
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.tls=true"

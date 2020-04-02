@@ -2,6 +2,22 @@
 
 **Operating System:** Debian 10 "Buster"
 
+**Hardware:**
+
+- [InWin IW-MS04 ITX Case](https://www.amazon.com/gp/product/B0167NCADS/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)
+- [AsRock J3710](https://www.amazon.com/gp/product/B01E97ZTPA/ref=oh_aui_search_asin_title?ie=UTF8&psc=1)
+- [8GB Crucial Ram x 2](https://www.amazon.com/gp/product/B006YG8X9Y/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
+  for a total of 16gb of ram
+- [Sandisk 240GB SSD](https://www.amazon.com/gp/product/B01F9G43WU) as boot drive
+- [HGST Ultrastar 7k4000 3TB x 2](https://www.amazon.com/gp/product/B01LYVD7ME/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
+  as storage drives in ZPool Mirror
+- [Aeotec z-wave adapter](https://www.amazon.com/gp/product/B00X0AWA6E/ref=oh_aui_search_asin_title?ie=UTF8&psc=1)
+  for controlling my zwave home automation network
+- [Intel PRO/1000 Pt Network adapter](https://www.amazon.com/gp/product/B000BMZHX2/ref=oh_aui_search_asin_title?ie=UTF8&psc=1)
+  - !! Note, x4 PCI slot where motherboard only has x1.  I modified motherboard to fit card, don't really recommend. 
+    Still better than Realtek though.  
+
+
 **Major Programs:**
 
 * [Cockpit](https://github.com/cockpit-project/cockpit)

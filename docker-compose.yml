@@ -135,14 +135,13 @@ services:
     ports:
       - '8123:8123'
     labels:
+      # Reverse proxy config
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
-      - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")"
-      # - "traefik.http.routers.homeassistant.service=homeassistant@docker"
-      # - "traefik.http.routers.homeassistant.rule=Path('/hass')"
+      - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"  # Needs to point to the internal port
 
   # ------------------------
   # Setting up GitLab Server
@@ -156,12 +155,13 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.${WEBSITE}'
         # gitlab_rails['gitlab_shell_ssh_port'] = 48622
-        nginx['enable'] = false
+        nginx['enable'] = false  # Disabled since Traefik is performing that role
         # nginx['redirect_http_to_https'] = false
         # nginx['listen_port'] = 80
         # nginx['listen_https'] = false
         # Add any other gitlab.rb configuration here, each on its own line
         #
+        # Enabling the ability for gitlab to send emails
         gitlab_rails['smtp_enable'] = true
         gitlab_rails['smtp_address'] = "smtp.gmail.com"
         gitlab_rails['smtp_port'] = 587
@@ -184,18 +184,18 @@ services:
       - '48622:22'  # Unassigned port to internal port
     network_mode: bridge
     labels:
+      # Reverse proxy config
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.tls=true"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
-      - "traefik.http.routers.gitlab.rule=Host(\"gitlab.${WEBSITE}\")"
-      # - "traefik.http.routers.gitlab.service=gitlab@docker"
-      # - "traefik.http.routers.gitlab.rule=Path('/gitlab')"
+      - "traefik.http.routers.gitlab.rule=Host(\"gitlab.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"  # Needs to point to the internal port
+      # SSH config (May or may not work)
       - "traefik.tcp.routers.gitlab-ssh.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.gitlab-ssh.entrypoints=ssh"
       - "traefik.tcp.routers.gitlab-ssh.service=gitlab-ssh-svc"
-      - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22"
+      - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22"  # Needs to point to the internal port
 
   # ------------------------
   # Setting up Calibre Server
@@ -216,9 +216,10 @@ services:
       - '8083:8083'
     network_mode: bridge
     labels:
+      # Reverse proxy config
       - "traefik.enable=true"
       - "traefik.http.routers.calibre-web.tls=true"
       - "traefik.http.routers.calibre-web.tls.certresolver=myresolver"
-      - "traefik.http.routers.calibre-web.rule=Host(\"calibre.${WEBSITE}\")"
+      - "traefik.http.routers.calibre-web.rule=Host(\"calibre.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.calibre-web.entrypoints=websecure"
       - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"  # Needs to point to the internal port

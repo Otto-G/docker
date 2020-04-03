@@ -253,7 +253,8 @@ services:
       - /Pool1-Working/Applications/Plex/transcode:/transcode
       - /Pool1-Working/Storage/Media/Music:/data/Music
       - /Pool1-Working/Storage/Media/Pictures:/data/Pictures
-      - /Pool1-Working/Storage/Media/'Video and TV':/data/'Video and TV'
+      - /Pool1-Working/Storage/Media/Movies:/data/Movies
+      - /Pool1-Working/Storage/Media/TV:/data/TV
     devices:
       - "/dev/dri:/dev/dri"
     ports:

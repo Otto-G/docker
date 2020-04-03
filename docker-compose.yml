@@ -247,7 +247,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
       - PLEX_CLAIM="${PLEXTOKEN}"
-      # - ADVERTISE_IP="plex.${WEBSITE}/"
+      - ADVERTISE_IP="192.168.1.55:32400/"
     volumes:
       - /Pool1-Working/Applications/Plex/config:/config
       - /Pool1-Working/Applications/Plex/transcode:/transcode

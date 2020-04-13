@@ -278,6 +278,10 @@ services:
       - "traefik.http.routers.plex.rule=Host(\"plex.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.plex.entrypoints=websecure"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"  # Needs to point to the internal port
+
+  # ------------------------
+  # Setting up Syncthing
+  # ------------------------
   syncthing:
     image: linuxserver/syncthing
     container_name: syncthing

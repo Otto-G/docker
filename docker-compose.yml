@@ -286,7 +286,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
-      - UMASK_SET=<022>
+      # - UMASK_SET=<022>
     volumes:
       - /Pool1-Working/Applications/Syncthing:/config
       - /Pool1-Working/Storage/Media/Syncthing:/data

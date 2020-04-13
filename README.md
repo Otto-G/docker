@@ -76,8 +76,9 @@ all of the tools that are going to be running together under Traefik
 need to be in bridge mode so that they work properly.  There might be 
 a way around that issue, but I couldn't find it.  
 
-As Syncthing is only being run as an internal service, I will keep
-it as a single docker command.  All of the other services will be 
-built as a docker-compose.yml file.  This is because they are all
-interdependent for the user facing functions.  It also provides a 
-slight degree of separation from Syncthing and the others.  
+Running Syncthing as part of the docker compose file helps when it comes
+time to perform an update since I can just run `docker-compose pull` and
+`docker-compose up -d` to update and bring up all of the updated services.  
+Since this is so much easier I'll keep everything together.  Syncthing 
+will still be kept un-managed by traefik since there is no need to be able 
+to work with it remotely.  

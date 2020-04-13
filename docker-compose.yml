@@ -19,9 +19,6 @@ version: '3.3'
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=unassigned
 #
 # Ports used by containers:
-#   Syncthing:
-#     System    Internal  Service
-#     8384 -->  8384      Syncthing
 #   Traefik:
 #     System    Internal  Service
 #     80 -->    80        HTTP
@@ -49,6 +46,11 @@ version: '3.3'
 #     32412     32412     udp
 #     32413     32413     udp
 #     32414     32414     udp
+#   Syncthing:
+#     System    Internal  Service
+#     8384      8384
+#     22000     22000
+#     21027     21027     udp
 #
 # Environment Variables (stored in .env)
 #   - MYDIR = /path/to/working/directory

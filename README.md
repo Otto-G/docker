@@ -47,16 +47,17 @@ It is possible to reduce the load on DuckDNS by using the below script to only s
 
 ## Docker Images
 
-1. [Syncthing](https://syncthing.net/)
+1. [Syncthing](https://github.com/linuxserver/docker-syncthing)
+    * Syncthing [main page](https://syncthing.net/)
     * File syncing between devices
 2. [Plex](https://github.com/plexinc/pms-docker)
     * Home media server
-3. Transmission
-4. GitLab
+3. [Transmission](https://github.com/linuxserver/docker-transmission)
+4. [GitLab](https://docs.gitlab.com/omnibus/docker/)
 5. [Home Assistant](https://www.home-assistant.io/docs/installation/docker/)
     * Config is saved [here](https://github.com/Otto-G/HomeAutomation/blob/master/configuration.yaml)
-6. Traefik
-7. Calibre
+6. [Traefik](https://docs.traefik.io/getting-started/install-traefik/#use-the-official-docker-image)
+7. [Calibre](https://github.com/linuxserver/docker-calibre-web)
 
 ### Structure 
 

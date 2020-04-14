@@ -46,6 +46,11 @@ version: '3.3'
 #     32412     32412     udp
 #     32413     32413     udp
 #     32414     32414     udp
+#   Transmission:
+#     System    Internal  Service
+#     9091      9091      Transmission communication
+#     51413     51413
+#     51413     51413     udp - specifying that traffic can run over plain and udp
 #   Syncthing:
 #     System    Internal  Service
 #     8384      8384

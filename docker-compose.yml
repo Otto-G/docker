@@ -58,6 +58,9 @@ version: '3.3'
 #   - EMAIL = me@example.com
 #   - SMTPEMAIL = me@example.com (used for sending emails in gitlab)
 #   - SMTPPASS = hunter2 (password for smtp)
+#   - PLEXTOKEN = tokenForPlexPass
+#   - TRANSUSER = username
+#   - TRANSPASS = hunter2
 
 # --------------------------------------------------------
 # Defining all of the different Applications that will run
@@ -210,9 +213,9 @@ services:
       - "traefik.tcp.routers.gitlab-ssh.service=gitlab-ssh-svc"
       - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22"  # Needs to point to the internal port
 
-  # ------------------------
+  # -------------------------
   # Setting up Calibre Server
-  # ------------------------
+  # -------------------------
   calibre-web:
     container_name: calibre-web
     image: linuxserver/calibre-web
@@ -237,9 +240,9 @@ services:
       - "traefik.http.routers.calibre-web.entrypoints=websecure"
       - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"  # Needs to point to the internal port
 
-  # ------------------------
+  # ----------------------
   # Setting up Plex Server
-  # ------------------------
+  # ----------------------
   plex:
     container_name: plex
     image: plexinc/pms-docker
@@ -279,9 +282,41 @@ services:
       - "traefik.http.routers.plex.entrypoints=websecure"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"  # Needs to point to the internal port
 
-  # ------------------------
+  # -----------------------
+  # Setting up Transmission
+  # -----------------------
+  transmission:
+    container_name: transmission
+    image: linuxserver/transmission
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      # - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=${TRANSUSER} #optional
+      - PASS=${TRANSPASS} #optional
+    volumes:
+      - /Pool1-Working/Applications/Transmission/config:/config
+      - /Pool1-Working/Applications/Transmission/progress:/downloads
+      - /Pool1-Working/Applications/Transmission/watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    network_mode: bridge
+    labels:
+      # Reverse proxy config
+      - "traefik.enable=true"
+      - "traefik.http.routers.transmission.tls=true"
+      - "traefik.http.routers.transmission.tls.certresolver=myresolver"
+      - "traefik.http.routers.transmission.rule=Host(\"transmission.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.transmission.entrypoints=websecure"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"  # Needs to point to the internal port
+
+  # --------------------
   # Setting up Syncthing
-  # ------------------------
+  # --------------------
   syncthing:
     image: linuxserver/syncthing
     container_name: syncthing

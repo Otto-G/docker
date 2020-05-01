@@ -353,11 +353,11 @@ services:
     network_mode: bridge
     labels:
       - "traefik.enable=false"
-      - "traefik.http.routers.transmission.tls=true"
-      - "traefik.http.routers.transmission.tls.certresolver=myresolver"
-      - "traefik.http.routers.transmission.rule=Host(\"adguard.${WEBSITE}\")"  # Setting the prefix to access the site
-      - "traefik.http.routers.transmission.entrypoints=websecure"
-      - "traefik.http.services.transmission.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.routers.adguard.tls=true"
+      - "traefik.http.routers.adguard.tls.certresolver=myresolver"
+      - "traefik.http.routers.adguard.rule=Host(\"adguard.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.adguard.entrypoints=websecure"
+      - "traefik.http.services.adguard.loadbalancer.server.port=80"  # Needs to point to the internal port
 
   # --------------------
   # Setting up Syncthing

@@ -21,12 +21,12 @@ version: '3.3'
 # Ports used by containers:
 #   Traefik:
 #     System    Internal  Service
-#     80 -->    80        HTTP
-#     443 -->   443       HTTPS
-#     8080 -->  8080      Traefik frontend
+#     80        80        HTTP
+#     443       443       HTTPS
+#     8080      8080      Traefik frontend
 #   HomeAssistant:
 #     System    Internal  Service
-#     8213 -->  8123      HomeAssistant frontend
+#     8213      8123      HomeAssistant frontend
 #   GitLab:
 #     System    Internal  Service
 #     48620 --> 80        HTTP
@@ -34,7 +34,7 @@ version: '3.3'
 #     48622 --> 22        SSH
 #   Calibre:
 #     System    Internal  Service
-#     8083 -->  8083      Calibre
+#     8083      8083      Calibre
 #   Plex:
 #     System    Internal  Service
 #     32400     32400     Plex frontend
@@ -51,6 +51,17 @@ version: '3.3'
 #     9091      9091      Transmission communication
 #     51413     51413
 #     51413     51413     udp - specifying that traffic can run over plain and udp
+#   AdGuard:
+#     System    Internal  Service
+#     53        53        tcp
+#     53        53        udp
+#     67        67        udp
+#     68        68        tcp
+#     68        68        udp
+#     48623 --> 80        tcp
+#     48624 --> 443       tcp
+#     853       853       tcp
+#     3000      3000      tcp
 #   Syncthing:
 #     System    Internal  Service
 #     8384      8384
@@ -318,6 +329,35 @@ services:
       - "traefik.http.routers.transmission.rule=Host(\"transmission.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"  # Needs to point to the internal port
+
+  # ------------------
+  # Setting up AdGuard
+  # ------------------
+  adguard:
+    image: adguard/adguardhome
+    container_name: adguard
+    restart: unless-stopped
+    volumes:
+      - /Pool1-Working/Applications/Adguard/workdir:/opt/adguardhome/work
+      - /Pool1-Working/Applications/Adguard/confdir:/opt/adguardhome/conf
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 68:68/tcp
+      - 68:68/udp
+      - 48623:80/tcp
+      - 48624:443/tcp
+      - 853:853/tcp
+      - 3000:3000/tcp
+    network_mode: bridge
+    labels:
+      - "traefik.enable=false"
+      # - "traefik.http.routers.transmission.tls=true"
+      # - "traefik.http.routers.transmission.tls.certresolver=myresolver"
+      # - "traefik.http.routers.transmission.rule=Host(\"adguard.${WEBSITE}\")"  # Setting the prefix to access the site
+      # - "traefik.http.routers.transmission.entrypoints=websecure"
+      # - "traefik.http.services.transmission.loadbalancer.server.port=80"  # Needs to point to the internal port
 
   # --------------------
   # Setting up Syncthing

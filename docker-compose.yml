@@ -352,7 +352,7 @@ services:
       - 3000:3000/tcp
     network_mode: bridge
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
       - "traefik.http.routers.adguard.tls=true"
       - "traefik.http.routers.adguard.tls.certresolver=myresolver"
       - "traefik.http.routers.adguard.rule=Host(\"adguard.${WEBSITE}\")"  # Setting the prefix to access the site

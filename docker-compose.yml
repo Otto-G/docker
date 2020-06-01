@@ -392,28 +392,28 @@ services:
     labels:
       - "traefik.enable=false"
 
-    # --------------------
-    # Setting up Syncthing
-    # --------------------
-    unifi-controller:
-      image: linuxserver/unifi-controller
-      container_name: unifi-controller
-      restart: unless-stopped
-      environment:
-        - puid=1000
-        - PGID=1000
-        - MEM_LIMIT=1024M  # Optional
-      volumes:
-        - /Pool1-Working/Applications/unifi:/config
-      ports:
-        - 3478:3478/udp
-        - 10001:10001/udp
-        - 8080:8080
-        - 8081:8081
-        - 8443:8443
-        - 8843:8843
-        - 8880:8880
-        - 6789:6789
-      network_mode: bridge
-      labels:
-        - "traefik.enable=false"
+  # --------------------
+  # Setting up Syncthing
+  # --------------------
+  unifi-controller:
+    image: linuxserver/unifi-controller
+    container_name: unifi-controller
+    restart: unless-stopped
+    environment:
+      - puid=1000
+      - PGID=1000
+      - MEM_LIMIT=1024M  # Optional
+    volumes:
+      - /Pool1-Working/Applications/unifi:/config
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+    network_mode: bridge
+    labels:
+      - "traefik.enable=false"

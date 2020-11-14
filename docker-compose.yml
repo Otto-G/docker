@@ -410,6 +410,7 @@ services:
       - MYSQL_USER=nextcloud
     volumes:
       - /Pool1-Working/Applications/Nextcloud/Database:/var/lib/mysql
+    network_mode: bridge
     labels:
       - "traefik.enable=false"
 
@@ -422,6 +423,7 @@ services:
       - GUID=1000
     volumes:
       - /Pool1-Working/Applications/Nextcloud/App:/var/www/html
+      - /Pool1-Working/Storage/Media/Syncthing:/externalData
     ports:
       - 48625:80
     links:

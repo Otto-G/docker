@@ -1,0 +1,3 @@
+[submodule "calibre-news"]
+	path = calibre-news
+	url = https://github.com/Otto-G/calibre-news.git

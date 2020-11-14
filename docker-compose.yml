@@ -392,9 +392,9 @@ services:
     labels:
       - "traefik.enable=false"
 
-  # --------------------
-  # Setting up Syncthing
-  # --------------------
+  # ---------------------------
+  # Setting up Unifi controller
+  # ---------------------------
   unifi-controller:
     image: linuxserver/unifi-controller
     container_name: unifi-controller

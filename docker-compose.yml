@@ -67,6 +67,8 @@ version: '3.3'
 #     8384      8384
 #     22000     22000
 #     21027     21027     udp
+#   NextCloud:
+#     48625 --> 80
 #   Unifi:
 #     System    Internal  Service
 #     3478      3478      udp
@@ -391,6 +393,47 @@ services:
     network_mode: bridge
     labels:
       - "traefik.enable=false"
+
+  # --------------------
+  # Setting up NextCloud
+  # --------------------
+  nextcloud-db:
+    image: mariadb
+    container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${NEXTDBROOT}
+      - MYSQL_PASSWORD=${NEXTDB}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    volumes:
+      - /Pool1-Working/Applications/Nextcloud/Database:/var/lib/mysql
+    labels:
+      - "traefik.enable=false"
+
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - GUID=1000
+    volumes:
+      - /Pool1-Working/Applications/Nextcloud/App:/var/www/html
+    ports:
+      - 48625:80
+    links:
+      - nextcloud-db
+    network_mode: bridge
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
+      - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+
 
   # ---------------------------
   # Setting up Unifi controller

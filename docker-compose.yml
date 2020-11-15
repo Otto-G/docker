@@ -256,6 +256,7 @@ services:
     volumes:
       - /Pool1-Working/Applications/Calibre:/config
       - /Pool1-Working/Storage/Media/Books:/books
+      - /home/michaelg/docker/calibre-news/recipies:/recipies
     ports:
       - '8083:8083'
     network_mode: bridge

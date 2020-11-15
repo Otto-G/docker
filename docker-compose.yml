@@ -449,7 +449,7 @@ services:
       - /Pool1-Working/Applications/Nextcloud/data:/data
       - /Pool1-Working/Storage/Media/Syncthing:/externalData
     ports:
-      - 48626:443
+      - 48626:80
     network_mode: bridge
     labels:
       - "traefik.enable=true"
@@ -457,7 +457,7 @@ services:
       - "traefik.http.routers.nextcloudLS.tls.certresolver=myresolver"
       - "traefik.http.routers.nextcloudLS.rule=Host(\"nextcloudls.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.nextcloudLS.entrypoints=websecure"
-      - "traefik.http.services.nextcloudLS.loadbalancer.server.port=443"  # Needs to point to the internal port
+      - "traefik.http.services.nextcloudLS.loadbalancer.server.port=80"  # Needs to point to the internal port
 
   # ---------------------------
   # Setting up Unifi controller

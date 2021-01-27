@@ -175,6 +175,7 @@ services:
       - TZ=America/New_York
     volumes:
       - /Pool1-Working/Applications/HomeAutomation:/config
+      - /Pool1-Working/Applications/wakeonlan:/root/.ssh
     network_mode: bridge
     ports:
       - '8123:8123'

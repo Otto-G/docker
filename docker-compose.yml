@@ -464,6 +464,10 @@ services:
       - "traefik.http.routers.linuxservernextcloud.entrypoints=websecure"
       - "traefik.http.services.linuxservernextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
       - "traefik.tcp.routers.linuxservernextcloud.tls.passthrough=true"
+      - "traefik.tcp.routers.linuxservernextcloud.tls.certresolver=myresolver"
+      - "traefik.tcp.routers.linuxservernextcloud.rule=Host(\"linuxservernextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.tcp.routers.linuxservernextcloud.entrypoints=websecure"
+      - "traefik.tcp.services.linuxservernextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
 
 
   # ---------------------------

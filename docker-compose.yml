@@ -454,7 +454,7 @@ services:
       - /Pool1-Working/Applications/Nextcloud/linuxServerData:/data
       - /Pool1-Working/Storage/Media/Syncthing:/externalData
     ports:
-      - 48626:80
+      - 48626:443
     network_mode: bridge
     labels:
       - "traefik.enable=true"
@@ -462,7 +462,8 @@ services:
       - "traefik.http.routers.linuxservernextcloud.tls.certresolver=myresolver"
       - "traefik.http.routers.linuxservernextcloud.rule=Host(\"linuxservernextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.linuxservernextcloud.entrypoints=websecure"
-      - "traefik.http.services.linuxservernextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.services.linuxservernextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
+      - "traefik.tcp.routers.linuxservernextcloud.tls.passthrough=true"
 
 
   # ---------------------------

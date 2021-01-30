@@ -438,6 +438,33 @@ services:
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
 
+  # --------------------------------
+  # Setting up LinuxServer/NextCloud
+  # --------------------------------
+  linuxServerNextcloud:
+    image: ghcr.io/linuxserver/nextcloud
+    container_name: linuxServerNextCloud
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /Pool1-Working/Applications/Nextcloud/linuxServerConfig:/config
+      - /Pool1-Working/Applications/Nextcloud/linuxServerData:/data
+      - /Pool1-Working/Storage/Media/Syncthing:/externalData
+    ports:
+      - 48626:443
+    network_mode: bridge
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linuxservernextcloud.tls=true"
+      - "traefik.http.routers.linuxservernextcloud.tls.certresolver=myresolver"
+      - "traefik.http.routers.linuxservernextcloud.rule=Host(\"linuxservernextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.linuxservernextcloud.entrypoints=websecure"
+      - "traefik.http.services.linuxservernextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+
+
   # ---------------------------
   # Setting up Unifi controller
   # ---------------------------

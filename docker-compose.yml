@@ -396,54 +396,12 @@ services:
     labels:
       - "traefik.enable=false"
 
-  # --------------------
-  # Setting up NextCloud
-  # --------------------
-  nextcloud-db:
-    image: mariadb
-    container_name: nextcloud-db
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=${NEXTDBROOT}
-      - MYSQL_PASSWORD=${NEXTDB}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-    volumes:
-      - /Pool1-Working/Applications/Nextcloud/Database:/var/lib/mysql
-    network_mode: bridge
-    labels:
-      - "traefik.enable=false"
-
-  nextcloud:
-    image: nextcloud
-    container_name: nextcloud
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - GUID=1000
-    volumes:
-      - /Pool1-Working/Applications/Nextcloud/App:/var/www/html
-      - /Pool1-Working/Storage/Media/Syncthing:/externalData
-    ports:
-      - 48625:80
-    links:
-      - nextcloud-db
-    network_mode: bridge
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nextcloud.tls=true"
-      - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
-      - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
-      - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
-
   # --------------------------------
   # Setting up LinuxServer/NextCloud
   # --------------------------------
-  linuxServerNextcloud:
+  nextcloud:
     image: ghcr.io/linuxserver/nextcloud
-    container_name: linuxServerNextCloud
+    container_name: nextcloud
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -458,16 +416,16 @@ services:
     network_mode: bridge
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.linuxservernextcloud.tls=true"
-      - "traefik.http.routers.linuxservernextcloud.tls.certresolver=myresolver"
-      - "traefik.http.routers.linuxservernextcloud.rule=Host(\"linuxservernextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
-      - "traefik.http.routers.linuxservernextcloud.entrypoints=web"
-      - "traefik.http.services.linuxservernextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
-      - "traefik.tcp.routers.linuxservernextcloud.tls.passthrough=true"
-      - "traefik.tcp.routers.linuxservernextcloud.tls.certresolver=myresolver"
-      - "traefik.tcp.routers.linuxservernextcloud.rule=HostSNI(\"linuxservernextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
-      - "traefik.tcp.routers.linuxservernextcloud.entrypoints=websecure"
-      - "traefik.tcp.services.linuxservernextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
+      - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.nextcloud.entrypoints=web"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.tcp.routers.nextcloud.tls.passthrough=true"
+      - "traefik.tcp.routers.nextcloud.tls.certresolver=myresolver"
+      - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.tcp.routers.nextcloud.entrypoints=websecure"
+      - "traefik.tcp.services.nextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
 
 
   # ---------------------------

@@ -54,7 +54,6 @@ whole_disk: 1
 DTL: 160
 create_txg: 4
 com.delphix:vdev_zap_leaf: 152
-
 ```
     
 ## DuckDNS

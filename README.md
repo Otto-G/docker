@@ -41,6 +41,8 @@ is not going to be the normal part of the drive, but rather one of the partition
 running `sudo zdb`.  The output will have something similar to what's below and will show the guid along with the
 actual path that zfs is using as the drive path.  
 
+[This post was helpful](https://askubuntu.com/questions/593619/zfs-on-linux-no-such-device-in-pool)
+
 ```shell
 $ sudo zdb
 

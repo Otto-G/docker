@@ -453,3 +453,21 @@ services:
     network_mode: host
     labels:
       - "traefik.enable=false"
+
+  # -----------------
+  # ESPHome Dashboard
+  # -----------------
+  esphome:
+    image: esphome/esphome
+    container_name: esphome
+    restart: unless-stopped
+    environment:
+     - puid=1000
+     - PGID=1000
+    volumes:
+      - /Pool1-Working/Applications/HomeAutomation/esphome:/config
+    ports:
+      6052:6052
+    network_mode: host
+    labels:
+      - "traefik.enable=false"

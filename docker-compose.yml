@@ -467,7 +467,7 @@ services:
     volumes:
       - /Pool1-Working/Applications/HomeAutomation/esphome:/config
     ports:
-      6052:6052
+      - 6052:6052
     network_mode: host
     labels:
       - "traefik.enable=false"

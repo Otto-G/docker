@@ -99,7 +99,7 @@ services:
   # ----------------------------
   traefik:
     container_name: traefik  # The name to call the created image
-    image: traefik:v2.2  # The official v2 Traefik docker image source
+    image: traefik:v2.5  # The official v2 Traefik docker image source
     restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:
@@ -114,7 +114,7 @@ services:
       #- "--entrypoints.http.proxyProtocol=true"
       #- "--entrypoints.http.proxyProtocol.trustedIPs=127.0.0.1/31, 192.168.1.55/24"
       - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=duckdns"
+      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=namecheap"
       - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/traefik/acme/acme.json"
       - "--log=true"
@@ -123,7 +123,8 @@ services:
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
     environment:
-      - "DUCKDNS_TOKEN_FILE=/traefik/duckDNSToken"
+      - "NAMECHEAP_API_KEY=${NAMECHEAP_API}"
+      - "NAMECHEAP_API_USER=${NAMECHEAP_USER}"
     volumes:
       # So that Traefik can listen to the Docker events
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -147,6 +148,8 @@ services:
         mode: host
       # The Web UI (enabled by --api.insecure=true)
       - "8180:8080"
+    extra_hosts:
+      - host.docker.internal:172.17.0.1  # Needed to avoid bad gateway
     labels:
       # Dashboard
       - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)"  # These ` are backticks, NOT single quotes '

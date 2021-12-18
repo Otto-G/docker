@@ -203,12 +203,8 @@ services:
     restart: always
     devices:
       - /dev/serial/by-id/usb-0658_0200-if00:/dev/zwave
-    environment:  # Should all be 32 digit hex codes "< /dev/urandom tr -dc A-F0-9 | head -c32 ; echo"
-#                  # I'm not sure that it's needed with the Aeotec Z-Stick Gen5 hub
-#      - S2_ACCESS_CONTROL_KEY: ""
-#      - S2_AUTHENTICATED_KEY: ""
-#      - S2_UNAUTHENTICATED_KEY: ""
-      - S0_LEGACY_KEY: ${ZWAVES0LEGACY}
+    environment:
+      S0_LEGACY_KEY: "${ZWAVES0LEGACY}"
     volumes:
       - /Pool1-Working/Applications/zwaveJs:/cache
     network_mode: host

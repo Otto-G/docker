@@ -175,8 +175,8 @@ services:
     container_name: homeassistant  # The name to call the image
     image: homeassistant/home-assistant:stable  # The source of the container
     restart: always  # Sets the container to restart whenever it stops/crashes
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
+#    devices:
+#      - /dev/ttyACM0:/dev/ttyACM0
     environment:
       - TZ=America/New_York
     volumes:

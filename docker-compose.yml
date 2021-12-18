@@ -205,9 +205,10 @@ services:
       - /dev/serial/by-id/usb-0658_0200-if00:/dev/zwave
     environment:
       S0_LEGACY_KEY: "${ZWAVES0LEGACY}"
+      ZWAVEJS_DISABLE_SOFT_RESET: 1
     volumes:
       - /Pool1-Working/Applications/zwaveJs:/cache
-    network_mode: host
+    network_mode: bridge
     ports:
       - '3001:3000'
 

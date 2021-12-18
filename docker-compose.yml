@@ -27,6 +27,9 @@ version: '3.3'
 #   HomeAssistant:
 #     System    Internal  Service
 #     8213      8123      HomeAssistant frontend
+#   ZwaveJS:
+#     System    Internal  Service
+#     3001      3000      ZwaveJS
 #   GitLab:
 #     System    Internal  Service
 #     48620 --> 80        HTTP
@@ -190,6 +193,28 @@ services:
       - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"  # Needs to point to the internal port
+
+  # --------------------------
+  # Setting up Zwave JS server
+  # --------------------------
+  zwavejs:
+    container_name: zwavejs
+    image: kpine/zwave-js-server:latest
+    restart: always
+    devices:
+      - /dev/serial/by-id/usb-0658_0200-if00:/dev/zwave
+#    environment:  # Should all be 32 digit hex codes "< /dev/urandom tr -dc A-F0-9 | head -c32 ; echo"
+#                  # I'm not sure that it's needed with the Aeotec Z-Stick Gen5 hub
+#      - S2_ACCESS_CONTROL_KEY: ""
+#      - S2_AUTHENTICATED_KEY: ""
+#      - S2_UNAUTHENTICATED_KEY: ""
+#      - S0_LEGACY_KEY: ""
+    volumes:
+      - /Pool1-Working/Applications/zwaveJs:/cache
+    network_mode: host
+    ports:
+      - '3001:3000'
+
 
   # ------------------------
   # Setting up GitLab Server

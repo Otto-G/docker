@@ -439,7 +439,7 @@ services:
       - /Pool1-Working/Storage/Media/Syncthing:/externalData
     ports:
       - 48626:443
-    network_mode: bridge
+    network_mode: host
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.tls=true"

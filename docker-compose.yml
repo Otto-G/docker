@@ -280,6 +280,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
       - DOCKER_MODS=linuxserver/calibre-web:calibre
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
     volumes:
       - /Pool1-Working/Applications/Calibre:/config
       - /Pool1-Working/Storage/Media/Books:/books

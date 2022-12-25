@@ -452,6 +452,8 @@ services:
       - "traefik.http.middlewares.nextcloud.headers.forceSTSHeader=true"
       - "traefik.http.middlewares.nextcloud.headers.stsPreload=true"
       - "traefik.http.middlewares.nextcloud.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.nextcloud.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.nextcloud.headers.customRequestHeaders.X-Forwarded-Proto=https"
       - "traefik.tcp.routers.nextcloud.tls.passthrough=true"
       - "traefik.tcp.routers.nextcloud.tls.certresolver=myresolver"
       - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site

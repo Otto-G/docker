@@ -448,6 +448,7 @@ services:
       - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.nextcloud.entrypoints=web"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.middlewares.nextcloud.headers.referrerPolicy=no-referrer"
       - "traefik.http.middlewares.nextcloud.headers.stsSeconds=15552000"
       - "traefik.http.middlewares.nextcloud.headers.forceSTSHeader=true"
       - "traefik.http.middlewares.nextcloud.headers.stsPreload=true"

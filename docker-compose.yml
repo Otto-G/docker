@@ -456,6 +456,7 @@ services:
       - "traefik.tcp.routers.nextcloud.tls.certresolver=myresolver"
       - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.tcp.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.middlewares=nextcloud"
       - "traefik.tcp.services.nextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
 
 

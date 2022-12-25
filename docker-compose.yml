@@ -448,18 +448,21 @@ services:
       - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.http.routers.nextcloud.entrypoints=web"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
-      - "traefik.http.middlewares.nextcloud.headers.referrerPolicy=no-referrer"
-      - "traefik.http.middlewares.nextcloud.headers.stsSeconds=15552000"
-      - "traefik.http.middlewares.nextcloud.headers.forceSTSHeader=true"
-      - "traefik.http.middlewares.nextcloud.headers.stsPreload=true"
-      - "traefik.http.middlewares.nextcloud.headers.stsIncludeSubdomains=true"
-      - "traefik.http.middlewares.nextcloud.headers.browserXssFilter=true"
-      - "traefik.http.middlewares.nextcloud.headers.customRequestHeaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
+      - "traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/"
+      - "traefik.http.middlewares.nc-rep.redirectregex.permanent=true"
+      - "traefik.http.middlewares.nextcloud-header.headers.referrerPolicy=no-referrer"
+      - "traefik.http.middlewares.nextcloud-header.headers.stsSeconds=15552000"
+      - "traefik.http.middlewares.nextcloud-header.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.nextcloud-header.headers.stsPreload=true"
+      - "traefik.http.middlewares.nextcloud-header.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.nextcloud-header.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.nextcloud-header.headers.customRequestHeaders.X-Forwarded-Proto=https"
       - "traefik.tcp.routers.nextcloud.tls.passthrough=true"
       - "traefik.tcp.routers.nextcloud.tls.certresolver=myresolver"
       - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
       - "traefik.tcp.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.routers.nextcloud.middlewares=nextcloud"
+      - "traefik.http.routers.nextcloud.middlewares=nextcloud-header,nc-rep"
       - "traefik.tcp.services.nextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
 
 

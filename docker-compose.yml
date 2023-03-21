@@ -478,7 +478,8 @@ services:
       - PGID=1000
       - MEM_LIMIT=1024M  # Optional
     volumes:
-      - /Pool1-Working/Applications/unifi:/config
+      - /Pool1-Working/Applications/unifi/config:/config
+      - /Pool1-Working/Applications/unifi/data:/usr/lib/unifi/
     ports:
       - 3478:3478/udp
       - 10001:10001/udp

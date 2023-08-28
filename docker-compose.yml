@@ -244,6 +244,8 @@ services:
         # Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert', see...
         # http://api.rubyonrails.org/classes/ActionMailer/Base.html
 
+        # gitlab_rails['lfs_enabled'] = false  # Disabling LFS allows version 16.4 to start
+
         gitlab_rails['content_security_policy'] = {enabled: true, report_only: false, directives: {frame_ancestors: "gitlab.${WEBSITE}"}}
     volumes:
       - '/Pool1-Working/Applications/GitLab/config:/etc/gitlab'

@@ -102,7 +102,7 @@ services:
   # ----------------------------
   traefik:
     container_name: traefik  # The name to call the created image
-    image: traefik:v2.5  # The official v2 Traefik docker image source
+    image: traefik:v2.10  # The official v2 Traefik docker image source
     restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:

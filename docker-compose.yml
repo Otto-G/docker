@@ -101,8 +101,8 @@ services:
   # Setting up the reverse proxy
   # ----------------------------
   traefik:
-    container_name: traefik  # The name to call the created image
-    image: traefik:v2.10  # The official v2 Traefik docker image source
+    container_name: traefik # The name to call the created image
+    image: traefik:v2.10 # The official v2 Traefik docker image source
     restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:
@@ -121,7 +121,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/traefik/acme/acme.json"
       - "--log=true"
-      - "--log.level=INFO"  # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+      - "--log.level=INFO" # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
       - "--log.filePath=/traefik/traefik.log"
       # - "--providers.file.filename=traefik/traefik-config.yml"
       # - "--providers.file.watch=true"
@@ -133,7 +133,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "${MYDIR}/traefik:/traefik"
     network_mode: bridge
-    ports:  # This long port section requires docker-compose version 3.2+
+    ports:
+      # This long port section requires docker-compose version 3.2+
       # The SSH Port
       - target: 2222
         published: 2222
@@ -152,10 +153,10 @@ services:
       # The Web UI (enabled by --api.insecure=true)
       - "8180:8080"
     extra_hosts:
-      - host.docker.internal:172.17.0.1  # Needed to avoid bad gateway
+      - host.docker.internal:172.17.0.1 # Needed to avoid bad gateway
     labels:
       # Dashboard
-      - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)"  # These ` are backticks, NOT single quotes '
+      - "traefik.http.routers.traefik.rule=Host(`api.${WEBSITE}`)" # These ` are backticks, NOT single quotes '
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=admin"
       - "traefik.http.routers.traefik.tls.certresolver=myresolver"
@@ -172,27 +173,27 @@ services:
   # Setting up the Home-Assistant server
   # ------------------------------------
   homeassistant:
-    container_name: homeassistant  # The name to call the image
-    image: homeassistant/home-assistant:stable  # The source of the container
-    restart: always  # Sets the container to restart whenever it stops/crashes
-#    devices:
-#      - /dev/ttyACM0:/dev/ttyACM0
+    container_name: homeassistant # The name to call the image
+    image: homeassistant/home-assistant:stable # The source of the container
+    restart: always # Sets the container to restart whenever it stops/crashes
+    #    devices:
+    #      - /dev/ttyACM0:/dev/ttyACM0
     environment:
       - TZ=America/New_York
     volumes:
       - /Pool1-Working/Applications/HomeAutomation:/config
       - /Pool1-Working/Applications/wakeonlan:/root/.ssh
     network_mode: host
-    ports:
-      - '8123:8123'
+    # ports:  # Port hosting isn't allowed for host mode
+    #  - '8123:8123'
     labels:
       # Reverse proxy config
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=myresolver"
-      - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.homeassistant.rule=Host(\"hass.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"  # Needs to point to the internal port
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123" # Needs to point to the internal port
 
   # --------------------------
   # Setting up Zwave JS server
@@ -216,9 +217,9 @@ services:
   # Setting up GitLab Server
   # ------------------------
   GitLab:
-    container_name: gitlab  # The name to call the image
-    image: 'gitlab/gitlab-ce:latest'  # The source of the container
-    restart: always  # Sets the container to restart whenever it stops/crashes
+    container_name: gitlab # The name to call the image
+    image: 'gitlab/gitlab-ce:latest' # The source of the container
+    restart: always # Sets the container to restart whenever it stops/crashes
     # hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
@@ -252,23 +253,23 @@ services:
       - '/Pool1-Working/Applications/GitLab/logs:/var/log/gitlab'
       - '/Pool1-Working/Applications/GitLab/data:/var/opt/gitlab'
     ports:
-      - '48620:80'  # Unassigned port to internal port
-      - '48621:443'  # Unassigned port to internal port
-      - '48622:22'  # Unassigned port to internal port
+      - '48620:80' # Unassigned port to internal port
+      - '48621:443' # Unassigned port to internal port
+      - '48622:22' # Unassigned port to internal port
     network_mode: bridge
     labels:
       # Reverse proxy config
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.tls=true"
       - "traefik.http.routers.gitlab.tls.certresolver=myresolver"
-      - "traefik.http.routers.gitlab.rule=Host(\"gitlab.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.gitlab.rule=Host(\"gitlab.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80" # Needs to point to the internal port
       # SSH config (May or may not work)
       - "traefik.tcp.routers.gitlab-ssh.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.gitlab-ssh.entrypoints=ssh"
       - "traefik.tcp.routers.gitlab-ssh.service=gitlab-ssh-svc"
-      - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22"  # Needs to point to the internal port
+      - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22" # Needs to point to the internal port
 
   # -------------------------
   # Setting up Calibre Server
@@ -295,9 +296,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.calibre-web.tls=true"
       - "traefik.http.routers.calibre-web.tls.certresolver=myresolver"
-      - "traefik.http.routers.calibre-web.rule=Host(\"calibre.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.calibre-web.rule=Host(\"calibre.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.calibre-web.entrypoints=websecure"
-      - "traefik.http.services.calibre-web.loadbalancer.server.port=8083"  # Needs to point to the internal port
+      - "traefik.http.services.calibre-web.loadbalancer.server.port=8083" # Needs to point to the internal port
 
   # ----------------------
   # Setting up Plex Server
@@ -337,9 +338,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.plex.tls=true"
       - "traefik.http.routers.plex.tls.certresolver=myresolver"
-      - "traefik.http.routers.plex.rule=Host(\"plex.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.plex.rule=Host(\"plex.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.plex.entrypoints=websecure"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"  # Needs to point to the internal port
+      - "traefik.http.services.plex.loadbalancer.server.port=32400" # Needs to point to the internal port
 
   # -----------------------
   # Setting up Transmission
@@ -369,9 +370,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.transmission.tls=true"
       - "traefik.http.routers.transmission.tls.certresolver=myresolver"
-      - "traefik.http.routers.transmission.rule=Host(\"transmission.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.transmission.rule=Host(\"transmission.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.transmission.entrypoints=websecure"
-      - "traefik.http.services.transmission.loadbalancer.server.port=9091"  # Needs to point to the internal port
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091" # Needs to point to the internal port
 
   # ------------------
   # Setting up AdGuard
@@ -398,9 +399,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.tls=true"
       - "traefik.http.routers.adguard.tls.certresolver=myresolver"
-      - "traefik.http.routers.adguard.rule=Host(\"adguard.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.adguard.rule=Host(\"adguard.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.adguard.entrypoints=websecure"
-      - "traefik.http.services.adguard.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.services.adguard.loadbalancer.server.port=80" # Needs to point to the internal port
 
   # --------------------
   # Setting up Syncthing
@@ -447,9 +448,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=myresolver"
-      - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.http.routers.nextcloud.rule=Host(\"nextcloud.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.nextcloud.entrypoints=web"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"  # Needs to point to the internal port
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80" # Needs to point to the internal port
       - "traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
       - "traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/"
       - "traefik.http.middlewares.nc-rep.redirectregex.permanent=true"
@@ -462,11 +463,10 @@ services:
       - "traefik.http.middlewares.nextcloud-header.headers.customRequestHeaders.X-Forwarded-Proto=https"
       - "traefik.tcp.routers.nextcloud.tls.passthrough=true"
       - "traefik.tcp.routers.nextcloud.tls.certresolver=myresolver"
-      - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")"  # Setting the prefix to access the site
+      - "traefik.tcp.routers.nextcloud.rule=HostSNI(\"nextcloud.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.tcp.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.routers.nextcloud.middlewares=nextcloud-header,nc-rep"
-      - "traefik.tcp.services.nextcloud.loadbalancer.server.port=443"  # Needs to point to the internal port
-
+      - "traefik.tcp.services.nextcloud.loadbalancer.server.port=443" # Needs to point to the internal port
 
   # ---------------------------
   # Setting up Unifi controller
@@ -482,16 +482,16 @@ services:
     volumes:
       - /Pool1-Working/Applications/unifi/config:/config
       # - /Pool1-Working/Applications/unifi/data:/usr/lib/unifi/
-    ports:
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 8080:8080
-      - 8081:8081
-      - 8443:8443
-      - 8843:8843
-      - 8880:8880
-      - 6789:6789
     network_mode: host
+    # ports:  # Port mapping isn't allowed in host mode
+    #   - 3478:3478/udp
+    #   - 10001:10001/udp
+    #   - 8080:8080
+    #   - 8081:8081
+    #   - 8443:8443
+    #   - 8843:8843
+    #   - 8880:8880
+    #   - 6789:6789
     labels:
       - "traefik.enable=false"
 
@@ -503,12 +503,12 @@ services:
     container_name: esphome
     restart: unless-stopped
     environment:
-     - puid=1000
-     - PGID=1000
+      - puid=1000
+      - PGID=1000
     volumes:
       - /Pool1-Working/Applications/HomeAutomation/esphome:/config
-    ports:
-      - 6052:6052
     network_mode: host
+    # ports:  # Port mapping isn't allowed in host mode
+    #   - 6052:6052
     labels:
       - "traefik.enable=false"

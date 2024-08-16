@@ -493,7 +493,13 @@ services:
     #   - 8880:8880
     #   - 6789:6789
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.http.routers.unifi.tls=true"
+      - "traefik.http.routers.unifi.tls.certresolver=myresolver"
+      - "traefik.http.routers.unifi.rule=Host(\"unifi.${WEBSITE}\")" # Setting the prefix to access the site
+      - "traefik.http.routers.unifi.entrypoints=websecure"
+      - "traefik.http.services.unifi.loadbalancer.server.port=8443" # Needs to point to the internal port
+      - "traefik.http.middlewares.middleware-ipwhitelist.ipwhitelist.sourcerange='127.0.0.1/32,192.168.0.0/32'" # Only allow internal IP
 
   # -----------------
   # ESPHome Dashboard

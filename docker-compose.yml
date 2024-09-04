@@ -494,13 +494,22 @@ services:
     #   - 6789:6789
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.unifi.tls=true"
-      - "traefik.http.routers.unifi.tls.certresolver=myresolver"
-      - "traefik.http.routers.unifi.rule=Host(\"unifi.${WEBSITE}\")" # Setting the prefix to access the site
-      - "traefik.http.routers.unifi.entrypoints=websecure"
-      - "traefik.http.services.unifi.loadbalancer.server.port=8443" # Needs to point to the internal port
-      - "traefik.http.middlewares.internal-addresses.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24" # Only allow internal IP
-      - "traefik.http.routers.unifi.middlewares=internal-addresses"
+      # - "traefik.http.routers.unifi.tls=true"
+      # - "traefik.http.routers.unifi.tls.certresolver=myresolver"
+      # - "traefik.http.routers.unifi.rule=Host(\"unifi.${WEBSITE}\")" # Setting the prefix to access the site
+      # - "traefik.http.routers.unifi.entrypoints=websecure"
+      # - "traefik.http.services.unifi.loadbalancer.server.port=8443" # Needs to point to the internal port
+      # - "traefik.http.middlewares.internal-addresses.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24" # Only allow internal IP
+      # - "traefik.http.routers.unifi.middlewares=internal-addresses"
+      # - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
+      - "traefik.tcp.routers.unifi.tls.passthrough=true"
+      - "traefik.tcp.routers.unifi.tls.certresolver=myresolver"
+      - "traefik.tcp.routers.unifi.rule=HostSNI(\"unifi.${WEBSITE}\")" # Setting the prefix to access the site
+      - "traefik.tcp.routers.unifi.entrypoints=websecure"
+      - "traefik.tcp.services.unifi.loadbalancer.server.port=8443" # Needs to point to the internal port
+      - "traefik.tcp.middlewares.internal-addresses.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24" # Only allow internal IP
+      - "traefik.tcp.routers.unifi.middlewares=internal-addresses"
+
 
   # -----------------
   # ESPHome Dashboard

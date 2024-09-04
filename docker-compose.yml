@@ -499,7 +499,7 @@ services:
       - "traefik.http.routers.unifi.rule=Host(\"unifi.${WEBSITE}\")" # Setting the prefix to access the site
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.services.unifi.loadbalancer.server.port=8443" # Needs to point to the internal port
-      - "traefik.http.middlewares.internal-addresses.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/32" # Only allow internal IP
+      - "traefik.http.middlewares.internal-addresses.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.0/24" # Only allow internal IP
       - "traefik.http.routers.unifi.middlewares=internal-addresses"
 
   # -----------------

@@ -183,6 +183,7 @@ services:
     volumes:
       - /Pool1-Working/Applications/HomeAutomation:/config
       - /Pool1-Working/Applications/wakeonlan:/root/.ssh
+      - /run/dbus:/run/dbus:ro
     network_mode: host
     # ports:  # Port hosting isn't allowed for host mode
     #  - '8123:8123'
@@ -244,7 +245,12 @@ services:
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
         # Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert', see...
         # http://api.rubyonrails.org/classes/ActionMailer/Base.html
-
+        
+        # Increase Timeout
+        gitlab_rails['env'] = {'GITLAB_RAILS_RACK_TIMEOUT' => 570}
+        puma['worker_timeout'] = 600
+        gitlab_workhorse['timeout'] = '600s'
+        # gitlab_rails['max_request_duration_seconds'] = 570
         # gitlab_rails['lfs_enabled'] = false  # Disabling LFS allows version 16.4 to start
 
         gitlab_rails['content_security_policy'] = {enabled: true, report_only: false, directives: {frame_ancestors: "gitlab.${WEBSITE}"}}

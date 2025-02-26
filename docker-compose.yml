@@ -282,18 +282,19 @@ services:
   # -------------------------
   calibre-web:
     container_name: calibre-web
-    image: linuxserver/calibre-web
+    image: crocodilestick/calibre-web-automated:latest
     restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
-      - DOCKER_MODS=linuxserver/calibre-web:calibre
-      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      # - DOCKER_MODS=linuxserver/calibre-web:calibre
+      # - DOCKER_MODS=linuxserver/mods:universal-calibre
     volumes:
       - /Pool1-Working/Applications/Calibre:/config
-      - /Pool1-Working/Storage/Media/Books:/books
-      - /home/michaelg/docker/calibre-news/recipies:/recipies
+      - /Pool1-Working/Storage/Media/Books:/calibre-library
+      - /Pool1-Working/Storage/Media/BookIngest:/cwa-book-ingest
+      # - /home/michaelg/docker/calibre-news/recipies:/recipies
     ports:
       - '8083:8083'
     network_mode: bridge

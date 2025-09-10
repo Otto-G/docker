@@ -318,7 +318,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
-      - PLEX_CLAIM="${PLEXTOKEN}"
+      - PLEX_CLAIM=${PLEXTOKEN}
       - ADVERTISE_IP="192.168.1.55:32400/"
     volumes:
       - /Pool1-Working/Applications/Plex/config:/config

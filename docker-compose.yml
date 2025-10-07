@@ -187,8 +187,9 @@ services:
     network_mode: host
     # ports:  # Port hosting isn't allowed for host mode
     #  - '8123:8123'
-    devices:
-      - "/dev/dri:/dev/dri"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     labels:
       # Reverse proxy config
       - "traefik.enable=true"

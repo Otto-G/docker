@@ -438,7 +438,7 @@ services:
   # Setting up LinuxServer/NextCloud
   # --------------------------------
   nextcloud:
-    image: ghcr.io/linuxserver/nextcloud:latest
+    image: lscr.io/linuxserver/nextcloud:latest
     container_name: nextcloud
     restart: unless-stopped
     environment:

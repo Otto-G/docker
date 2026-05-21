@@ -89,6 +89,7 @@ services:
   # Setting up the reverse proxy
   # ----------------------------
   traefik:
+    # Website for page is here: https://doc.traefik.io/traefik/
     container_name: traefik # The name to call the created image
     image: traefik:v3.7 # The official v3 Traefik docker image source
     restart: always

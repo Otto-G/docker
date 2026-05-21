@@ -90,7 +90,7 @@ services:
   # ----------------------------
   traefik:
     container_name: traefik # The name to call the created image
-    image: traefik:v3.3 # The official v3 Traefik docker image source
+    image: traefik:v3.7 # The official v3 Traefik docker image source
     restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command:
@@ -236,7 +236,7 @@ services:
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
         # Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert', see...
         # http://api.rubyonrails.org/classes/ActionMailer/Base.html
-        
+
         # Increase Timeout
         gitlab_rails['env'] = {'GITLAB_RAILS_RACK_TIMEOUT' => 570}
         puma['worker_timeout'] = 600

@@ -281,7 +281,7 @@ services:
       - USER_UID=1000
       - USER_GID=1000
     volumes:
-      - ./forgejo:/Pool1-Working/Applications/forgejo
+      - /Pool1-Working/Applications/forgejo:/data
       - /etc/localtime:/etc/localtime:ro
     ports:
       - '3002:3000'

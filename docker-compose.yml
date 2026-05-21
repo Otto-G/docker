@@ -270,6 +270,38 @@ services:
       - "traefik.tcp.services.gitlab-ssh-svc.loadbalancer.server.port=22" # Needs to point to the internal port
 
   # -------------------------
+  # Setting up Forgejo Server
+  # -------------------------
+  forgejo:
+    container_name: forgejo
+    # Website link: https://forgejo.org
+    image: codeberg.org/forgejo/forgejo:15
+    restart: unless-stopped
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    volumes:
+      - ./forgejo:/Pool1-Working/Applications/forgejo
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '3002:3000'
+      - '2224:22'
+    network_mode: bridge
+    labels:
+      # Reverse proxy config
+      - "traefik.enable=true"
+      - "traefik.http.routers.git.tls=true"
+      - "traefik.http.routers.git.tls.certresolver=myresolver"
+      - "traefik.http.routers.git.rule=Host(\"git.${WEBSITE}\")" # Setting the prefix to access the site
+      - "traefik.http.routers.git.entrypoints=websecure"
+      - "traefik.http.services.git.loadbalancer.server.port=3000" # Needs to point to the internal port
+      # SSH config (May or may not work)
+      - "traefik.tcp.routers.git-ssh.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.git-ssh.entrypoints=ssh"
+      - "traefik.tcp.routers.git-ssh.service=gitlab-ssh-svc"
+      - "traefik.tcp.services.git-ssh-svc.loadbalancer.server.port=22" # Needs to point to the internal port
+
+  # -------------------------
   # Setting up Calibre Server
   # -------------------------
   calibre-web:

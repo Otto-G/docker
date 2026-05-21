@@ -211,7 +211,7 @@ services:
   # ------------------------
   GitLab:
     container_name: gitlab # The name to call the image
-    image: 'gitlab/gitlab-ce:latest' # The source of the container
+    image: 'gitlab/gitlab-ce:18.11.3-ce.0' # The source of the container
     restart: always # Sets the container to restart whenever it stops/crashes
     # hostname: 'gitlab.example.com'
     environment:

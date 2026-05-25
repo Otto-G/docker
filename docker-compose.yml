@@ -17,26 +17,26 @@
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=unassigned
 #
 # Ports used by containers:
-#   Traefik:
+#   Traefik: Bridge
 #     System    Internal  Service
 #     80        80        HTTP
 #     443       443       HTTPS
+#     2222      2222      SSH
 #     8180      8080      Traefik frontend
-#   HomeAssistant:
+#   HomeAssistant:  Host
 #     System    Internal  Service
 #     8213      8123      HomeAssistant frontend
-#   ZwaveJS:
+#   ZwaveJS:  Bridge
 #     System    Internal  Service
 #     3001      3000      ZwaveJS
-#   GitLab:
+#   forgejo:  Bridge
 #     System    Internal  Service
-#     48620 --> 80        HTTP
-#     48621 --> 443       HTTPS
-#     48622 --> 22        SSH
-#   Calibre:
+#     3002  --> 3000      HTTP
+#     2224  --> 22        SSH
+#   Calibre:  Bridge
 #     System    Internal  Service
 #     8083      8083      Calibre
-#   Plex:
+#   Plex:  Bridge
 #     System    Internal  Service
 #     32400     32400     Plex frontend
 #     3005      3005      tcp
@@ -47,12 +47,12 @@
 #     32412     32412     udp
 #     32413     32413     udp
 #     32414     32414     udp
-#   Transmission:
+#   Transmission:  Bridge
 #     System    Internal  Service
 #     9091      9091      Transmission communication
 #     51413     51413
 #     51413     51413     udp - specifying that traffic can run over plain and udp
-#   AdGuard:
+#   AdGuard:  Bridge
 #     System    Internal  Service
 #     53        53        tcp
 #     53        53        udp
@@ -63,13 +63,15 @@
 #     48624 --> 443       tcp
 #     853       853       tcp
 #     3000      3000      tcp
-#   Syncthing:
+#   Syncthing:  Bridge
 #     System    Internal  Service
 #     8384      8384
 #     22000     22000
 #     21027     21027     udp
-#   NextCloud:
-#     48625 --> 80
+#   NextCloud:  Bridge
+#     48626 --> 443
+#   EspHome:  Host
+#     6052      6052
 #
 # Environment Variables (stored in .env)
 #   - MYDIR = /path/to/working/directory

@@ -4,8 +4,8 @@
 #   docker-compose.yml
 #   README.md
 #
+# {mydir}/
 #   home-assistant/
-#
 #   plex/
 #
 #   traefik/
@@ -172,8 +172,8 @@ services:
     environment:
       - TZ=America/New_York
     volumes:
-      - /Pool1-Working/Applications/HomeAutomation:/config
-      - /Pool1-Working/Applications/wakeonlan:/root/.ssh
+      - ${MYDIR}/HomeAutomation:/config
+      - ${MYDIR}/wakeonlan:/root/.ssh
       - /run/dbus:/run/dbus:ro
     network_mode: host
     # ports:  # Port hosting isn't allowed for host mode
@@ -203,7 +203,7 @@ services:
       S0_LEGACY_KEY: "${ZWAVES0LEGACY}"
       ZWAVEJS_DISABLE_SOFT_RESET: 1
     volumes:
-      - /Pool1-Working/Applications/zwaveJs:/cache
+      - ${MYDIR}/zwaveJs:/cache
     network_mode: bridge
     ports:
       - '3001:3000'
@@ -283,7 +283,7 @@ services:
       - USER_UID=1000
       - USER_GID=1000
     volumes:
-      - /Pool1-Working/Applications/forgejo:/data
+      - ${MYDIR}/forgejo:/data
       - /etc/localtime:/etc/localtime:ro
     ports:
       - '3002:3000'
@@ -317,9 +317,9 @@ services:
       # - DOCKER_MODS=linuxserver/calibre-web:calibre
       # - DOCKER_MODS=linuxserver/mods:universal-calibre
     volumes:
-      - /Pool1-Working/Applications/Calibre:/config
-      - /Pool1-Working/Storage/Media/Books:/calibre-library
-      - /Pool1-Working/Storage/Media/BookIngest:/cwa-book-ingest
+      - ${MYDIR}/Calibre:/config
+      - ${MYSTORE}/Media/Books:/calibre-library
+      - ${MYSTORE}/Media/BookIngest:/cwa-book-ingest
       # - /home/michaelg/docker/calibre-news/recipies:/recipies
     ports:
       - '8083:8083'
@@ -347,12 +347,12 @@ services:
       - PLEX_CLAIM=${PLEXTOKEN}
       - ADVERTISE_IP="192.168.1.55:32400/"
     volumes:
-      - /Pool1-Working/Applications/Plex/config:/config
-      - /Pool1-Working/Applications/Plex/transcode:/transcode
-      - /Pool1-Working/Storage/Media/Music:/data/Music
-      - /Pool1-Working/Storage/Media/Pictures:/data/Pictures
-      - /Pool1-Working/Storage/Media/Movies:/data/Movies
-      - /Pool1-Working/Storage/Media/TV:/data/TV
+      - ${MYDIR}/Plex/config:/config
+      - ${MYDIR}/Plex/transcode:/transcode
+      - ${MYSTORE}/Media/Music:/data/Music
+      - ${MYSTORE}/Media/Pictures:/data/Pictures
+      - ${MYSTORE}/Media/Movies:/data/Movies
+      - ${MYSTORE}/Media/TV:/data/TV
     devices:
       - "/dev/dri:/dev/dri"
     ports:
@@ -390,9 +390,9 @@ services:
       - USER=${TRANSUSER} #optional
       - PASS=${TRANSPASS} #optional
     volumes:
-      - /Pool1-Working/Applications/Transmission/config:/config
-      - /Pool1-Working/Applications/Transmission/progress:/downloads
-      - /Pool1-Working/Applications/Transmission/watch:/watch
+      - ${MYDIR}/Transmission/config:/config
+      - ${MYDIR}/Transmission/progress:/downloads
+      - ${MYDIR}/Transmission/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
@@ -415,8 +415,8 @@ services:
     container_name: adguard
     restart: unless-stopped
     volumes:
-      - /Pool1-Working/Applications/Adguard/workdir:/opt/adguardhome/work
-      - /Pool1-Working/Applications/Adguard/confdir:/opt/adguardhome/conf
+      - ${MYDIR}/Adguard/workdir:/opt/adguardhome/work
+      - ${MYDIR}/Adguard/confdir:/opt/adguardhome/conf
     ports:
       - 53:53/tcp
       - 53:53/udp
@@ -449,8 +449,8 @@ services:
       - TZ=America/New_York
       # - UMASK_SET=<022>
     volumes:
-      - /Pool1-Working/Applications/Syncthing:/config
-      - /Pool1-Working/Storage/Media/Syncthing:/data
+      - ${MYDIR}/Syncthing:/config
+      - ${MYSTORE}/Media/Syncthing:/data
     ports:
       - 8384:8384
       - 22000:22000
@@ -471,9 +471,9 @@ services:
       - PGID=1000
       - TZ=America/New_York
     volumes:
-      - /Pool1-Working/Applications/Nextcloud/linuxServerConfig:/config
-      - /Pool1-Working/Applications/Nextcloud/linuxServerData:/data
-      - /Pool1-Working/Storage/Media/Syncthing:/externalData
+      - ${MYDIR}/Nextcloud/linuxServerConfig:/config
+      - ${MYDIR}/Nextcloud/linuxServerData:/data
+      - ${MYSTORE}/Media/Syncthing:/externalData
     ports:
       - 48626:443
     network_mode: bridge
@@ -512,7 +512,7 @@ services:
       - puid=1000
       - PGID=1000
     volumes:
-      - /Pool1-Working/Applications/HomeAutomation/esphome:/config
+      - ${MYDIR}/HomeAutomation/esphome:/config
     network_mode: host
     # ports:  # Port mapping isn't allowed in host mode
     #   - 6052:6052
